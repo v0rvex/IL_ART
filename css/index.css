@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap');
+
+body{
+    background: rgb(33, 33, 33);
+    color: rgb(180, 180, 180);
+}
+#topbar{
+    position: absolute;
+    background-color: #2c2c2c;
+    box-shadow: 0px 0.2px rgb(0, 0, 0);
+}
+
+#service{
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+a, #name{
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+#text_container {
+    display: grid;
+    grid-template-rows: 2;
+    grid-row-gap: 0px;
+    }
+
+#footer{
+    background-color: rgb(37, 37, 37);
+    position: fixed;
+    box-shadow: 0px 0px 2px black;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+#images_container{
+    width: 100%;
+    display: grid;
+}
+#socials_container{
+    display: flex;
+    justify-content: space-evenly;
+}
+* {
+    transition: ease-in-out;
+    transition-duration: 200ms;
+}
+#whatsapp:hover, #instagram:hover, #facebook:hover{
+    filter: var(--icon-filter);
+}
+#load_more{
+    border-radius: 50%;
+}
+#button_container{
+    left: 0;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    z-index: 10;
+}
+.gallery-image{
+    width: 100%;
+    height: auto;
+    transition: transform 0.3 ease;
+}
+.gallery-image:hover {
+    transform: scale(1.05);
+  }
