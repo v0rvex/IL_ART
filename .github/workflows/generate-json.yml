@@ -38,6 +38,8 @@ jobs:
         echo "]" >> Images/image_list.json
 
     - name: Commit and push image list JSON
+      env:
+         ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
