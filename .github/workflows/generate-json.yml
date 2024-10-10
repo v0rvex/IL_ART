@@ -1,0 +1,31 @@
+name: Generate Image List
+
+on:
+  push:
+    paths:
+      - Images/**  # Запуск workflow при изменениях в папке Images
+
+jobs:
+  generate_json:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Generate image list
+      run: |
+        FILES=$(ls Images)
+        echo "[" > image_list.json
+        for FILE in $FILES; do
+          echo "\"$FILE\"," >> image_list.json
+        done
+        echo "]" >> image_list.json
+    
+    - name: Commit and push the image list
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add image_list.json
+        git commit -m "Update image list"
+        git push
