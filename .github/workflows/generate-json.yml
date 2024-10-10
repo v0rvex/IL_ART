@@ -41,6 +41,8 @@ jobs:
       env:
          ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
       run: |
+        git config --global user.email "govnoed830@gmail.com"
+        git config --global user.name "v0rvex"
         git add Images/image_list.json
         git commit -m "Update image_list.json"
         git push https://github.com/${{ github.repository }}.git HEAD:main
