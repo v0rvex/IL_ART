@@ -1,31 +1,46 @@
-name: Generate Image List
+name: Generate Image List JSON
 
 on:
   push:
-    paths:
-      - Images/**  # Запуск workflow при изменениях в папке Images
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-  generate_json:
+  build:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Generate image list
+    - name: Create image list JSON
       run: |
-        FILES=$(ls Images)
-        echo "[" > image_list.json
-        for FILE in $FILES; do
-          echo "\"$FILE\"," >> image_list.json
+        # Создаем папку Images, если ее нет
+        mkdir -p Images
+
+        # Начинаем формирование JSON файла (перезаписываем его заново)
+        echo "[" > Images/image_list.json
+
+        # Для каждого изображения в папке Images добавляем запись в JSON файл
+        count=0
+        for file in $(ls Images/*.jpg Images/*.png 2> /dev/null); do
+          echo "{\"name\": \"$(basename $file)\", \"path\": \"$file\"}," >> Images/image_list.json
+          count=$((count+1))
         done
-        echo "]" >> image_list.json
-    
-    - name: Commit and push the image list
+
+        # Проверяем, есть ли добавленные изображения
+        if [ "$count" -gt 0 ]; then
+          # Убираем последнюю запятую и закрываем JSON массив
+          sed -i '$ s/,$//' Images/image_list.json
+        fi
+
+        echo "]" >> Images/image_list.json
+
+    - name: Commit and push image list JSON
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add image_list.json
-        git commit -m "Update image list"
+        git add Images/image_list.json
+        git commit -m "Update image_list.json"
         git push
