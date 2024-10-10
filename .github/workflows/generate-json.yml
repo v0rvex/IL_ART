@@ -45,4 +45,4 @@ jobs:
         git config --global user.name "v0rvex"
         git add Images/image_list.json
         git commit -m "Update image_list.json"
-        git push https://github.com/${{ github.repository }} HEAD:main
+        git push https://github.com/${{ github.repository }}
