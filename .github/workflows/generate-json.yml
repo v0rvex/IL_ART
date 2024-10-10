@@ -41,8 +41,6 @@ jobs:
       env:
          ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
         git add Images/image_list.json
         git commit -m "Update image_list.json"
-        git push
+        git push https://github.com/${{ github.repository }}.git HEAD:main
