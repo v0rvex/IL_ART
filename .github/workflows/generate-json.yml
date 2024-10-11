@@ -19,23 +19,20 @@ jobs:
       run: |
         # Создаем папку Images, если ее нет
         mkdir -p Images
-
         # Начинаем формирование JSON файла (перезаписываем его заново)
         echo "[" > image_list.json
-
-        # Для каждого изображения в папке Images добавляем запись в JSON файл
+        # Перебираем все изображения в папке Images, поддерживая пробелы в именах файлов
         count=0
-        for file in $(ls Images/*.jpg Images/*.png Images/*.jpeg 2> /dev/null); do
-          echo "{\"name\": \"$(basename $file)\", \"path\": \"$file\"}," >> image_list.json
+        while IFS= read -r -d '' file; do
+          echo "{\"name\": \"$(basename "$file")\", \"path\": \"$file\"}," >> image_list.json
           count=$((count+1))
-        done
+        done < <(find Images/ -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" \) -print0)
 
         # Проверяем, есть ли добавленные изображения
         if [ "$count" -gt 0 ]; then
-          # Убираем последнюю запятую и  закрываем JSON массив
+          # Убираем последнюю запятую и закрываем JSON массив
           sed -i '$ s/,$//' image_list.json
         fi
-
         echo "]" >> image_list.json
 
     - name: Commit and push image list JSON
