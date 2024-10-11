@@ -25,7 +25,7 @@ jobs:
 
         # Для каждого изображения в папке Images добавляем запись в JSON файл
         count=0
-        for file in $(ls Images/*.jpg Images/*.png 2> /dev/null); do
+        for file in $(ls Images/*.jpg Images/*.png Images/*.jpeg 2> /dev/null); do
           echo "{\"name\": \"$(basename $file)\", \"path\": \"$file\"}," >> image_list.json
           count=$((count+1))
         done
