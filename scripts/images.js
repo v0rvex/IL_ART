@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return fetch(jsonUrl)
           .then(response => response.json())
           .then(data => {
-              images = data.map(item => item.path); // Извлекаем ссылки на изображения из JSON
+              images = data.map(item => item.path);
+              console.log(images)// Извлекаем ссылки на изображения из JSON
           })
           .catch(error => {
               console.error('Ошибка при загрузке JSON:', error);
